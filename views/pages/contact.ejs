@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body class="container">
+    <header>
+      <%- include('../partials/header', { currentPage: 'contact' }); %>
+    </header>
+
+    <main>
+      <div class="main">
+        <div class="about">
+          <div class="info">
+            <h3>Contact</h3>
+            <form id="contactForm">
+              <label for="name">Name:</label><br />
+              <input type="text" id="name" name="name" required />
+              <div id="nameError" class="error"></div>
+
+              <label for="email">Email:</label><br />
+              <input type="email" id="email" name="email" required />
+              <div id="emailError" class="error"></div>
+
+              <label for="message">Message:</label><br />
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                required
+              ></textarea>
+              <div id="messageError" class="error"></div>
+
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      $(document).ready(function () {
+        // Real-time validation on input
+        $("#name").on("input", function () {
+          var name = $(this).val();
+          $("#nameError").text(name.length > 0 ? "" : "Name is required");
+        });
+
+        $("#email").on("input", function () {
+          var email = $(this).val();
+          $("#emailError").text(
+            email.includes("@") && email.includes(".")
+              ? ""
+              : "Enter a valid email address"
+          );
+        });
+
+        $("#message").on("input", function () {
+          var message = $(this).val();
+          $("#messageError").text(
+            message.length >= 10 ? "" : "Message must be at least 10 characters"
+          );
+        });
+
+        // Form submission
+        $("#contactForm").submit(function (event) {
+          // Perform additional checks if needed
+          var name = $("#name").val();
+          var email = $("#email").val();
+          var message = $("#message").val();
+
+          if (
+            name.length === 0 ||
+            !email.includes("@") ||
+            !email.includes(".") ||
+            message.length < 10
+          ) {
+            // Prevent form submission if there are errors
+            event.preventDefault();
+
+            // Display a general error message
+            alert("Please fill in all required fields correctly.");
+          }
+        });
+      });
+    </script>
+
+    <style>
+      div.main {
+        max-width: 900px;
+        padding-top: 50px;
+      }
+
+      div.main h1 {
+        margin: 0;
+        padding: 5px 10px;
+        color: #191919;
+        background: #1dd1a1;
+        display: inline-block;
+      }
+
+      /* div.about {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        grid-template-rows: 1fr;
+        justify-content: space-between;
+      } */
+
+      form {
+        margin-top: 20px;
+      }
+
+      input {
+        width: 500px;
+        height: 40px;
+        margin-bottom: 10px;
+      }
+
+      textarea {
+        width: 500px;
+        height: 60px;
+        margin-bottom: 10px;
+      }
+
+      button {
+        width: 500px;
+        height: 40px;
+        outline: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #191919;
+        background: #1dd1a1;
+      }
+
+      .info p span {
+        color: #1dd1a1;
+        font-size: 15px;
+      }
+
+      .info p span:hover {
+        color: #191919;
+        background: #1dd1a1;
+      }
+
+      .info h3 {
+        margin: 0;
+        padding: 5px 10px;
+        color: #191919;
+        background: #1dd1a1;
+        display: inline-block;
+      }
+
+      .info ul {
+        columns: 3 auto;
+      }
+
+      .info ul li {
+        list-style-type: disc !important;
+      }
+
+      .pic {
+        margin-left: 10%;
+      }
+
+      .pic .aboutMe {
+        border-radius: 4%;
+      }
+
+      @media (max-width: 930px) {
+        div.about {
+          grid-template-columns: 1fr;
+          grid-template-rows: 1fr -1fr;
+        }
+
+        .info ul {
+          columns: 2 auto;
+        }
+
+        .pic {
+          display: none;
+        }
+      }
+    </style>
+
+    <!-- <footer><%- include('../partials/footer'); %></footer> -->
+  </body>
+</html>
